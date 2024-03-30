@@ -1,40 +1,8 @@
 name: Using DevOps for GitHub Actions
-
-on:
-  push:
-    branches: [ main ]  # Only trigger on pushes to the main branch
-
+on: push
 jobs:
-  build-java:
-    runs-on: ubuntu-latest  # Run the workflow on Ubuntu virtual machines
-
+  my-job:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3  # Checkout the code from the repository (latest version)
-      - name: Set up JDK 17  # Updated to a more recent LTS version (consider your project's requirements)
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          cache: 'maven'  # Cache Maven dependencies for faster builds
-
-      - name: Use a cache for Gradle wrapper (optional)
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-wrapper-
-
-      - name: Grant execute permission for gradlew (if necessary)
-        run: chmod +x gradlew  # Check if this step is still required based on your project setup
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run unit tests (optional)
-        run: ./gradlew test  # Add this step if you have unit tests
-
-      - name: Upload test results (optional)
-        uses: actions/upload-artifact@v3  # Upload test results for later analysis (if applicable)
-        with:
-          name: test-results
-          path: build/test-results/**/*.xml  # Adjust the path based on your test report location
+      - name: my-step
+        run: echo "Hello World!"
